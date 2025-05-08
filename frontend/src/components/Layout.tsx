@@ -3,7 +3,6 @@ import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import axios from "@/services/api";
 import {
-  Home,
   LayoutDashboard,
   Users,
   FileText,
@@ -12,6 +11,8 @@ import {
   CalendarClock,
   Sun,
   Moon,
+  Menu,
+  X,
 } from "lucide-react";
 
 interface Usuario {
@@ -24,6 +25,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
   const router = useRouter();
   const [usuario, setUsuario] = useState<Usuario | null>(null);
   const [darkMode, setDarkMode] = useState(false);
+  const [menuAberto, setMenuAberto] = useState(false);
 
   useEffect(() => {
     async function carregarUsuario() {
@@ -34,7 +36,6 @@ export default function Layout({ children }: { children: React.ReactNode }) {
         console.error("Erro ao carregar usuário", error);
       }
     }
-
     carregarUsuario();
   }, []);
 
@@ -50,20 +51,28 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 
   return (
     <div className="flex h-screen dark:bg-gray-900 dark:text-white">
-      <aside className="w-64 bg-blue-800 dark:bg-gray-800 text-white flex flex-col p-6">
+      {/* Botão de menu mobile */}
+      <div className="sm:hidden absolute top-4 left-4 z-50">
+        <button onClick={() => setMenuAberto(!menuAberto)}>
+          {menuAberto ? <X size={24} /> : <Menu size={24} />}
+        </button>
+      </div>
+
+      {/* Sidebar */}
+      <aside
+        className={`${
+          menuAberto ? "block" : "hidden"
+        } sm:block w-64 bg-blue-800 dark:bg-gray-800 text-white flex flex-col p-6 fixed sm:static h-full z-40`}
+      >
         <div className="flex items-center justify-between mb-6">
           <button
             onClick={() => router.push("/home")}
             className="text-xl font-bold text-white"
           >
-            <span className="hidden md:inline">📚 Advotech</span>
+            📚 <span className="hidden md:inline">Advotech</span>
           </button>
           <button onClick={toggleDarkMode}>
-            {darkMode ? (
-              <Sun className="w-5 h-5" />
-            ) : (
-              <Moon className="w-5 h-5" />
-            )}
+            {darkMode ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
           </button>
         </div>
 
@@ -76,47 +85,29 @@ export default function Layout({ children }: { children: React.ReactNode }) {
         )}
 
         <nav className="flex flex-col space-y-2">
-          <Link
-            href="/dashboard"
-            className="flex items-center gap-2 hover:bg-blue-700 dark:hover:bg-gray-700 p-2 rounded"
-          >
+          <Link href="/dashboard" className="flex items-center gap-2 hover:bg-blue-700 dark:hover:bg-gray-700 p-2 rounded">
             <LayoutDashboard className="w-5 h-5" />
             Dashboard
           </Link>
-          <Link
-            href="/clientes"
-            className="flex items-center gap-2 hover:bg-blue-700 dark:hover:bg-gray-700 p-2 rounded"
-          >
+          <Link href="/clientes" className="flex items-center gap-2 hover:bg-blue-700 dark:hover:bg-gray-700 p-2 rounded">
             <Users className="w-5 h-5" />
             Clientes
           </Link>
-          <Link
-            href="/fichas"
-            className="flex items-center gap-2 hover:bg-blue-700 dark:hover:bg-gray-700 p-2 rounded"
-          >
+          <Link href="/fichas" className="flex items-center gap-2 hover:bg-blue-700 dark:hover:bg-gray-700 p-2 rounded">
             <FileText className="w-5 h-5" />
             Fichas
           </Link>
-          <Link
-            href="/agenda"
-            className="flex items-center gap-2 hover:bg-blue-700 dark:hover:bg-gray-700 p-2 rounded"
-          >
+          <Link href="/agenda" className="flex items-center gap-2 hover:bg-blue-700 dark:hover:bg-gray-700 p-2 rounded">
             <CalendarClock className="w-5 h-5" />
             Agenda
           </Link>
           {usuario?.role === "MASTER" && (
             <>
-              <Link
-                href="/configuracoes"
-                className="flex items-center gap-2 hover:bg-blue-700 dark:hover:bg-gray-700 p-2 rounded"
-              >
+              <Link href="/configuracoes" className="flex items-center gap-2 hover:bg-blue-700 dark:hover:bg-gray-700 p-2 rounded">
                 <Settings className="w-5 h-5" />
                 Cadastro de usuário
               </Link>
-              <Link
-                href="/logs"
-                className="flex items-center gap-2 hover:bg-blue-700 dark:hover:bg-gray-700 p-2 rounded"
-              >
+              <Link href="/logs" className="flex items-center gap-2 hover:bg-blue-700 dark:hover:bg-gray-700 p-2 rounded">
                 <FileText className="w-5 h-5" />
                 Logs de Auditoria
               </Link>
@@ -133,7 +124,8 @@ export default function Layout({ children }: { children: React.ReactNode }) {
         </button>
       </aside>
 
-      <main className="flex-1 overflow-y-auto p-8 bg-gray-100 dark:bg-gray-900">
+      {/* Conteúdo principal */}
+      <main className="flex-1 overflow-y-auto p-4 sm:ml-64 bg-gray-100 dark:bg-gray-900">
         {children}
       </main>
     </div>
