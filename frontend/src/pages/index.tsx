@@ -15,6 +15,7 @@ type LoginFormData = z.infer<typeof loginSchema>;
 export default function LoginPage() {
   const router = useRouter();
   const [erro, setErro] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const {
     register,
@@ -26,6 +27,8 @@ export default function LoginPage() {
 
   async function onSubmit(data: LoginFormData) {
     setErro("");
+    setLoading(true);
+
     try {
       const response = await axios.post("/login", data);
       localStorage.setItem("token", response.data.token);
@@ -46,6 +49,8 @@ export default function LoginPage() {
       } else {
         setErro("Erro ao tentar fazer login. Tente novamente mais tarde.");
       }
+    } finally {
+      setLoading(false);
     }
   }
 
@@ -99,9 +104,12 @@ export default function LoginPage() {
 
         <button
           type="submit"
-          className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 rounded-lg transition"
+          disabled={loading}
+          className={`w-full ${
+            loading ? "bg-gray-400" : "bg-blue-600 hover:bg-blue-700"
+          } text-white font-semibold py-2 rounded-lg transition`}
         >
-          Entrar
+          {loading ? "⌛ Entrando..." : "Entrar"}
         </button>
       </form>
     </div>
