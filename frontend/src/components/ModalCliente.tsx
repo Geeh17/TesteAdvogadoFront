@@ -10,6 +10,7 @@ interface Cliente {
   cpf: string;
   telefone: string;
   endereco: string;
+  dataAniversario?: string;
 }
 
 interface Props {
@@ -24,6 +25,7 @@ const clienteSchema = z.object({
   cpf: z.string().regex(/^\d{3}\.\d{3}\.\d{3}-\d{2}$/, "CPF inválido"),
   telefone: z.string().regex(/^\(\d{2}\) \d{5}-\d{4}$/, "Telefone inválido"),
   endereco: z.string().min(5, "Endereço é obrigatório"),
+  dataAniversario: z.string().optional(),
 });
 
 type ClienteFormData = z.infer<typeof clienteSchema>;
@@ -51,6 +53,7 @@ export default function ModalCliente({
         cpf: cliente.cpf,
         telefone: cliente.telefone,
         endereco: cliente.endereco,
+        dataAniversario: cliente.dataAniversario?.slice(0, 10) || "",
       });
     } else {
       reset({
@@ -58,6 +61,7 @@ export default function ModalCliente({
         cpf: "",
         telefone: "",
         endereco: "",
+        dataAniversario: "",
       });
     }
   }, [cliente, reset]);
@@ -133,6 +137,17 @@ export default function ModalCliente({
             {errors.endereco && (
               <p className="text-red-500 text-sm">{errors.endereco.message}</p>
             )}
+          </div>
+
+          <div>
+            <label className="block mb-2 text-sm font-medium text-gray-700 dark:text-white">
+              Data de Aniversário
+            </label>
+            <input
+              type="date"
+              {...register("dataAniversario")}
+              className="w-full px-3 py-2 border rounded-md dark:bg-gray-800 dark:text-white"
+            />
           </div>
 
           <div className="flex justify-end space-x-2">
