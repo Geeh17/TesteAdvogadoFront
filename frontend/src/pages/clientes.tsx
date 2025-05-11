@@ -12,6 +12,7 @@ interface Cliente {
   cpf: string;
   telefone: string;
   endereco: string;
+  dataAniversario?: string;
 }
 
 export default function ClientesPage() {
@@ -31,8 +32,9 @@ export default function ClientesPage() {
   function handleSubmit(data: Omit<Cliente, "id">) {
     const payload = {
       ...data,
-      cpf: data.cpf.replace(/\D/g, ""), // remove pontos e traços
-      telefone: data.telefone.replace(/\D/g, ""), // remove parênteses e traços
+      cpf: data.cpf.replace(/\D/g, ""),
+      telefone: data.telefone.replace(/\D/g, ""),
+      dataAniversario: data.dataAniversario || undefined,
     };
 
     if (editingCliente) {
@@ -110,6 +112,9 @@ export default function ClientesPage() {
                 <th className="px-6 py-3 text-left text-sm font-medium">
                   Endereço
                 </th>
+                <th className="px-6 py-3 text-left text-sm font-medium">
+                  Data de Aniversário
+                </th>
                 <th className="px-6 py-3 text-right text-sm font-medium">
                   Ações
                 </th>
@@ -132,6 +137,13 @@ export default function ClientesPage() {
                   </td>
                   <td className="px-6 py-4 text-sm text-gray-600 dark:text-gray-300">
                     {cliente.endereco}
+                  </td>
+                  <td className="px-6 py-4 text-sm text-gray-600 dark:text-gray-300">
+                    {cliente.dataAniversario
+                      ? new Date(cliente.dataAniversario).toLocaleDateString(
+                          "pt-BR"
+                        )
+                      : "--"}
                   </td>
                   <td className="px-6 py-4 text-sm text-right space-x-2">
                     <button

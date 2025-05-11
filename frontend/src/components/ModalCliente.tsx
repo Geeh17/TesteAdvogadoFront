@@ -44,6 +44,7 @@ export default function ModalCliente({
     formState: { errors },
   } = useForm<ClienteFormData>({
     resolver: zodResolver(clienteSchema),
+    shouldFocusError: false, // ✅ Corrige o erro de focus
   });
 
   useEffect(() => {
