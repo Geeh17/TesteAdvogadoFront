@@ -62,9 +62,12 @@ export default function HomePage() {
     <PrivateRoute>
       <Layout>
         <div className="max-w-7xl mx-auto py-10 px-4">
-          <h1 className="text-4xl font-extrabold text-gray-800 dark:text-white mb-4">
-            Sistema de Gestão Jurídica Integrada
-          </h1>
+          {/* 🔧 Ajuste de padding à esquerda no mobile */}
+          <div className="px-4 sm:px-0">
+            <h1 className="text-4xl font-extrabold text-gray-800 dark:text-white mb-4">
+              Sistema de Gestão Jurídica Integrada
+            </h1>
+          </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-10">
             <Link href="/clientes">

@@ -56,18 +56,18 @@ export default function LoginPage() {
 
   return (
     <div
-      className="flex justify-center items-center h-screen bg-cover bg-center"
+      className="flex justify-center items-center min-h-screen bg-cover bg-center px-4"
       style={{ backgroundImage: "url('/bg-login.png')" }}
     >
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className="bg-white p-10 rounded-2xl shadow-xl w-full max-w-md space-y-6 text-center"
+        className="bg-white p-8 sm:p-10 rounded-2xl shadow-xl w-full max-w-md space-y-6 text-center"
       >
         <img
           src="/logo.png"
           alt="Logo"
-          className="h-28 mx-auto mb-2"
-          style={{ maxWidth: "180px" }}
+          className="h-24 mx-auto mb-2"
+          style={{ maxWidth: "160px" }}
         />
 
         {erro && <p className="text-red-500 text-sm mb-2">{erro}</p>}
@@ -106,7 +106,9 @@ export default function LoginPage() {
           type="submit"
           disabled={loading}
           className={`w-full ${
-            loading ? "bg-gray-400" : "bg-blue-600 hover:bg-blue-700"
+            loading
+              ? "bg-gray-400 cursor-not-allowed"
+              : "bg-blue-600 hover:bg-blue-700"
           } text-white font-semibold py-2 rounded-lg transition`}
         >
           {loading ? "⌛ Entrando..." : "Entrar"}

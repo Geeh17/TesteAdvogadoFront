@@ -44,41 +44,43 @@ export default function HomePage() {
   return (
     <PrivateRoute>
       <Layout>
-        <h1 className="text-2xl font-bold text-gray-800 dark:text-white mb-6">
-          Painel Administrativo
-        </h1>
+        <div className="max-w-4xl mx-auto px-4 py-10 space-y-8">
+          <h1 className="text-2xl font-bold text-gray-800 dark:text-white">
+            Painel Administrativo
+          </h1>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          <Card
-            title="Total de Clientes"
-            value={dashboard?.totalClientes || 0}
-            icon={<Users className="w-6 h-6 text-white" />}
-          />
-          <Card
-            title="Total de Fichas"
-            value={dashboard?.totalFichas || 0}
-            icon={<ClipboardList className="w-6 h-6 text-white" />}
-          />
-          <Card
-            title="Fichas este mês"
-            value={dashboard?.fichasPorMes?.[0]?.total || 0}
-            icon={<CalendarDays className="w-6 h-6 text-white" />}
-          />
-        </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            <Card
+              title="Total de Clientes"
+              value={dashboard?.totalClientes || 0}
+              icon={<Users className="w-6 h-6 text-white" />}
+            />
+            <Card
+              title="Total de Fichas"
+              value={dashboard?.totalFichas || 0}
+              icon={<ClipboardList className="w-6 h-6 text-white" />}
+            />
+            <Card
+              title="Fichas este mês"
+              value={dashboard?.fichasPorMes?.[0]?.total || 0}
+              icon={<CalendarDays className="w-6 h-6 text-white" />}
+            />
+          </div>
 
-        <div className="mt-8 space-y-8">
           {dashboard?.fichasPorMes && (
             <BarChartComponent
               data={dashboard.fichasPorMes}
               titulo="Fichas Criadas por Mês"
             />
           )}
+
           {clientesPorMes.length > 0 && (
             <BarChartComponent
               data={clientesPorMes}
               titulo="Clientes Cadastrados por Mês"
             />
           )}
+
           {rankingAdvogados.length > 0 && (
             <PieChartComponent data={rankingAdvogados} />
           )}

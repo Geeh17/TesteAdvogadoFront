@@ -62,7 +62,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
       <aside
         className={`${
           menuAberto ? "block" : "hidden"
-        } sm:block w-64 bg-blue-800 dark:bg-gray-800 text-white flex flex-col p-6 fixed sm:static h-full z-40`}
+        } sm:block w-64 bg-blue-800 dark:bg-gray-800 text-white flex flex-col p-6 h-full z-40`}
       >
         <div className="flex items-center justify-between mb-6 sm:hidden">
           <button onClick={() => setMenuAberto(false)}>
@@ -159,7 +159,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
         </button>
       </aside>
 
-      <main className="flex-1 overflow-y-auto p-4 sm:ml-64 bg-gray-100 dark:bg-gray-900">
+      <main className="flex-1 overflow-y-auto p-4 bg-gray-100 dark:bg-gray-900">
         {children}
       </main>
     </div>
