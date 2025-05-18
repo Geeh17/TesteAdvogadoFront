@@ -50,22 +50,27 @@ export default function Layout({ children }: { children: React.ReactNode }) {
   }
 
   return (
-    <div className="flex h-screen dark:bg-gray-900 dark:text-white">
-      <div className="sm:hidden absolute top-4 left-4 z-50">
+    <div className="flex min-h-screen relative bg-gray-100 dark:bg-gray-900">
+      {/* Botão do menu mobile */}
+      <div className="sm:hidden fixed top-4 left-4 z-50">
         {!menuAberto && (
-          <button onClick={() => setMenuAberto(true)}>
-            <Menu size={24} />
+          <button onClick={() => setMenuAberto(true)} aria-label="Abrir menu">
+            <Menu size={24} className="text-white dark:text-gray-200" />
           </button>
         )}
       </div>
 
+      {/* Sidebar */}
       <aside
         className={`${
-          menuAberto ? "block" : "hidden"
-        } sm:block w-64 bg-blue-800 dark:bg-gray-800 text-white flex flex-col p-6 h-full z-40`}
+          menuAberto
+            ? "fixed inset-0 z-50 bg-blue-800 dark:bg-gray-800 p-6"
+            : "hidden"
+        } sm:relative sm:flex sm:flex-col sm:w-64 sm:p-6 sm:block sm:bg-blue-800 dark:sm:bg-gray-800 text-white h-full`}
       >
+        {/* Header mobile */}
         <div className="flex items-center justify-between mb-6 sm:hidden">
-          <button onClick={() => setMenuAberto(false)}>
+          <button onClick={() => setMenuAberto(false)} aria-label="Fechar menu">
             <X size={24} />
           </button>
           <button onClick={toggleDarkMode}>
@@ -77,6 +82,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
           </button>
         </div>
 
+        {/* Header desktop */}
         <div className="hidden sm:flex items-center justify-between mb-6">
           <button
             onClick={() => router.push("/home")}
@@ -159,7 +165,8 @@ export default function Layout({ children }: { children: React.ReactNode }) {
         </button>
       </aside>
 
-      <main className="flex-1 overflow-y-auto p-4 bg-gray-100 dark:bg-gray-900">
+      {/* Conteúdo */}
+      <main className="flex-1 w-full overflow-x-hidden px-4 py-6 sm:px-6 sm:py-8">
         {children}
       </main>
     </div>
