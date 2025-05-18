@@ -66,7 +66,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
           menuAberto
             ? "fixed inset-0 z-50 bg-blue-800 dark:bg-gray-800 p-6"
             : "hidden"
-        } sm:relative sm:flex sm:flex-col sm:w-64 sm:p-6 sm:block sm:bg-blue-800 dark:sm:bg-gray-800 text-white h-full`}
+        } sm:relative sm:flex sm:flex-col sm:w-64 sm:p-6 sm:bg-blue-800 dark:sm:bg-gray-800 text-white h-full`}
       >
         {/* Header mobile */}
         <div className="flex items-center justify-between mb-6 sm:hidden">
